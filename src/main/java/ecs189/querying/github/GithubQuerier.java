@@ -47,6 +47,25 @@ public class GithubQuerier {
             sb.append("<div id=event-" + i + " class=\"collapse\" style=\"height: auto;\"> <pre>");
             sb.append(event.toString());
             sb.append("</pre> </div>");
+
+            // Display commit history below
+            sb.append("<br /> <div>");
+            // Retrieve commits in JSON form
+            JSONObject payload = event.getJSONObject("payload");
+            JSONArray commits = payload.getJSONArray("commits");
+
+            for (int currentCommit = 0; currentCommit < commits.length(); currentCommit++) {
+                String commitHash = commits.getJSONObject(currentCommit).getString("sha");
+                String commitMsg = commits.getJSONObject(currentCommit).getString("message");
+
+                sb.append("Commit SHA (First 8 letters): ");
+                sb.append(commitHash.substring(0, Math.min(commitHash.length(), 8)));
+                sb.append("<br />Commit Message: ");
+                sb.append(commitMsg);
+                sb.append("<br /> <br />");
+            }
+
+            sb.append("</div>");
         }
         sb.append("</div>");
         return sb.toString();
