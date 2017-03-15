@@ -58,10 +58,30 @@ public class GithubQuerier {
         System.out.println(url);
         JSONObject json = Util.queryAPI(new URL(url));
         System.out.println(json);
-        JSONArray events = json.getJSONArray("root");
-        for (int i = 0; i < events.length() && i < 10; i++) {
-            eventList.add(events.getJSONObject(i));
-        }
+        JSONArray events;
+
+        int counter = 0;
+        int pageNumber = 1;
+
+        do {
+            String url2 = url + "?page=" + pageNumber + "&";
+
+            JSONObject currentPage = Util.queryAPI(new URL(url2));
+            events = currentPage.getJSONArray("root");
+
+            for (int i = 0; i < events.length() && counter < 10; i++) {
+                String type = events.getJSONObject(i).getString("type");
+
+                if (type.equals("PushEvent")) {
+                    eventList.add(events.getJSONObject(i));
+                    counter++;
+                }
+            }
+
+            pageNumber++;
+
+        } while(counter < 10 || events.length() != 0);
+
         return eventList;
     }
 }
