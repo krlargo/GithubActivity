@@ -4,18 +4,20 @@ Garland Li
 
 Created Files:
 - activity-old.war
-		Original activity.war file from Vincent's repository. 
+	Original activity.war file from Vincent's repository.
+	Used to create "activity-old" image. Must be copied as "activity.war" prior to build.
 - activity-new.war
-		Our modified activity.war file used to display only 10 most-recent push events.
+	Our modified activity.war file used to display only 10 most-recent push events.
+	Used to create "activity-new" image. Must be copied as "activity.war" prior to build.
 - swap1.sh:
-		Swaps web2 out and web1 in.
+	Swaps web2 out and web1 in.
 
 Modified Files:
 - dorun.sh:
-		Renamed ecs189_web1_1 to web1 so that the naming could stay consistent.
+	Renamed ecs189_web1_1 to web1 so that the naming is consistent.
 
 Commands To Type In:
-Before either method, build images 'ng' in nginx-rev and 'activity-old' and 'activity-new' in activity.
+(Before either method, build images 'ng' in nginx-rev and 'activity-old' and 'activity-new' in activity.)
 
 (Method 1) Manually:
 //initiate network and compose
