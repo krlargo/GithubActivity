@@ -1,0 +1,40 @@
+ECS 189E HW4
+Kevin Largo
+Garland Li
+
+Created Files:
+- activity-old.war
+		Original activity.war file from Vincent's repository. 
+- activity-new.war
+		Our modified activity.war file used to display only 10 most-recent push events.
+- swap1.sh:
+		Swaps web2 out and web1 in.
+
+Modified Files:
+- dorun.sh:
+		Renamed ecs189_web1_1 to web1 so that the naming could stay consistent.
+
+Commands To Type In:
+Before either method, build images 'ng' in nginx-rev and 'activity-old' and 'activity-new' in activity.
+
+(Method 1) Manually:
+//initiate network and compose
+./dorun.sh
+
+//swap web2 in
+docker run -d --name web2 --network ecs189_default activity-new
+docker exec ecs189_proxy_1 /bin/bash /bin/swap2.sh
+
+//remove web1
+docker rm -f `docker ps -a | grep web1 | sed -e 's: .*$::'`
+
+//swap web1 back in
+docker run -d --name web1 --network ecs189_default activitiy-old
+docker exec ecs189_proxy_1 /bin/bash /bin/swap1.sh
+
+//remove web2
+docker rm -f `docker ps -a | grep web2 | sed -e 's: .*$::'`
+
+(Method 2) Alternatively, use hotswap.sh:
+./dorun.sh
+./hotswap.sh [image-to-swap-to]
