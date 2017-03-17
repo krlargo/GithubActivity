@@ -29,6 +29,7 @@ docker exec ecs189_proxy_1 /bin/bash /bin/swap2.sh
 
 //remove web1
 docker rm -f `docker ps -a | grep web1 | sed -e 's: .*$::'`
+(Or just look up web1 container hash using "docker ps -a", then "docker rm *SHA* -f")
 
 //swap web1 back in
 docker run -d --name web1 --network ecs189_default activitiy-old
@@ -36,6 +37,7 @@ docker exec ecs189_proxy_1 /bin/bash /bin/swap1.sh
 
 //remove web2
 docker rm -f `docker ps -a | grep web2 | sed -e 's: .*$::'`
+(Or just look up web2 container hash using "docker ps -a", then "docker rm *SHA* -f")
 
 (Method 2) Alternatively, use hotswap.sh:
 ./dorun.sh
